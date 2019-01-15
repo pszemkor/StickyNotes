@@ -1,7 +1,12 @@
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.geometry.Insets;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Tooltip;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -85,7 +90,7 @@ class Menu {
         EventHandler greyHandler = new EventHandler() {
             @Override
             public void handle(Event event) {
-                style.setBackGround("-fx-background-color: darkgrey ;");
+                style.setBackGround("-fx-background-color: darkgrey;");
                 layout.setStyle(style.getBackGround());
                 textArea.setStyle(style.getTextStyle());
             }
@@ -119,7 +124,24 @@ class Menu {
     }
 
     HBox createBottomMenu(InlineCssTextArea textArea, Style textStyle) {
-        HBox bottomMenu = new HBox(100);
+        HBox bottomMenu = new HBox(40);
+
+        ChoiceBox fontSize = new ChoiceBox(FXCollections.observableArrayList(18,20,22,24,26));
+        fontSize.setStyle("-fx-background-color: #494C52; -fx-text-fill:  white;");
+        String [] sizes = new String[5];
+        sizes[0] = "-fx-font-size: 18pt ;";
+        sizes[1] = "-fx-font-size: 20pt ;";
+        sizes[2] = "-fx-font-size: 22pt ;";
+        sizes[3] = "-fx-font-size: 24pt ;";
+        sizes[4] = "-fx-font-size: 26pt ;";
+        fontSize.setTooltip(new Tooltip("select font size"));
+        fontSize.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                textStyle.setSize(sizes[newValue.intValue()]);
+                textArea.setStyle( 0,textArea.getText().length(),textStyle.getSize());
+            }
+        });
 
         Button italicButton = new Button(" italic  ");
         italicButton.setStyle("-fx-background-color: #494C52; -fx-text-fill:  white;");
@@ -168,7 +190,7 @@ class Menu {
             }
         });
 
-        bottomMenu.getChildren().addAll(underlineButton, boldButton, italicButton);
+        bottomMenu.getChildren().addAll(underlineButton, boldButton, italicButton,fontSize);
         bottomMenu.setPadding(new Insets(10, 10, 10, 10));
 
         return bottomMenu;

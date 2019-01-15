@@ -4,7 +4,7 @@ public class Style {
     private String fontType = "-fx-font-family: Times New Roman;";
     private String backGround = "-fx-background-color: darkgrey;";
     private String decoration = "-fx-underline: false;";
-    private String size = "-fx-font-size: 25pt ;";
+    private String size = "-fx-font-size: 24pt ;";
 
     public void setSize(String size) {
         this.size = size;
