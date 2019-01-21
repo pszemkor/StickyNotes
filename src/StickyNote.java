@@ -1,34 +1,34 @@
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import org.fxmisc.richtext.*;
+
 import java.io.*;
 
 public class StickyNote extends Application {
 
-    Properties manager = new Properties();
-    public static int firstOpened = 1;
+    private Properties manager = new Properties();
+    private static int firstOpened = 1;
 
 
     @Override
     public void start(Stage primaryStage) throws IOException {
         Style style = new Style();
-        BufferedReader reader;
-        reader = new BufferedReader(new FileReader("C:\\Users\\Acer\\IdeaProjects\\StickyNotes\\lastwindow.txt"));
-
-
-        if(firstOpened!=1){
+        BufferedReader reader = new BufferedReader(new FileReader("C:\\Users\\Acer\\IdeaProjects\\StickyNotes\\lastwindow.txt"));
+        if (firstOpened != 1) {
             manager.getLayout().setStyle("-fx-background-color: darkgrey ;");
             manager.getTextArea().setStyle(style.getTextStyle());
         }
-        if(firstOpened==1){
+        if (firstOpened == 1) {
             StringBuilder textBuilder = new StringBuilder();
             String textAreaStyle = reader.readLine();
             String layoutStyle = reader.readLine();
             String line = reader.readLine();
-            while(line!=null){
+            while (line != null) {
                 textBuilder.append(line);
                 line = reader.readLine();
             }
@@ -51,7 +51,7 @@ public class StickyNote extends Application {
         Scene scene = new Scene(manager.getLayout(), 500, 400);
         HBox topMenu = null;
         try {
-            topMenu = menu.createTopMenu(manager.getLayout(), manager.getTextArea(),style,this);
+            topMenu = menu.createTopMenu(manager.getLayout(), manager.getTextArea(), style, this);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -69,7 +69,6 @@ public class StickyNote extends Application {
         primaryStage.setScene(scene);
 
 
-
         manager.getTextArea().setWrapText(true);
         primaryStage.setTitle("Sticky note");
         primaryStage.setMinWidth(500);
@@ -77,6 +76,20 @@ public class StickyNote extends Application {
         primaryStage.setMinHeight(400);
         primaryStage.setMaxHeight(400);
         primaryStage.show();
+
+        primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent event) {
+                System.out.println("Closing");
+                primaryStage.close();
+                try {
+                    stop();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
 
     }
 
@@ -91,7 +104,7 @@ public class StickyNote extends Application {
         printWriter.println(manager.getTextArea().getText());
         printWriter.flush();
         printWriter.close();
-        System.out.println("printed: "+ manager.getTextArea().getText());
+        System.out.println("printed: " + manager.getTextArea().getText());
         System.out.println(manager.getTextArea().getStyle());
     }
 

@@ -1,4 +1,4 @@
-import javafx.application.Platform;
+
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -22,7 +22,8 @@ class Menu {
 
     HBox createTopMenu(BorderPane layout, InlineCssTextArea textArea, Style style, StickyNote note) throws FileNotFoundException {
         HBox topMenu = new HBox(20);
-        Button exitButton = new Button("save as last");
+
+       /* Button exitButton = new Button("save as last");
         exitButton.setStyle("-fx-background-color: #494C52; -fx-text-fill:  white;");
         exitButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -36,19 +37,16 @@ class Menu {
             }
         });
 
-
+        */
         Circle blueCircle = new Circle();
         blueCircle.setStrokeWidth(3);
         blueCircle.setStroke(Color.BLACK);
         blueCircle.setFill(Color.BLUE);
         blueCircle.setRadius(20);
-        EventHandler blueHandler = new EventHandler() {
-
-            public void handle(Event event) {
-                style.setBackGround("-fx-background-color: cornflowerblue;");
-                layout.setStyle(style.getBackGround());
-                textArea.setStyle(style.getTextStyle());
-            }
+        EventHandler blueHandler = event -> {
+            style.setBackGround("-fx-background-color: cornflowerblue;");
+            layout.setStyle(style.getBackGround());
+            textArea.setStyle(style.getTextStyle());
         };
         blueCircle.addEventFilter(MouseEvent.MOUSE_CLICKED, blueHandler);
 
@@ -112,7 +110,7 @@ class Menu {
         };
         orangeCircle.addEventFilter(MouseEvent.MOUSE_CLICKED, orangeHandler);
 
-        topMenu.getChildren().addAll(  blueCircle, redCircle, greenCircle, greyCircle, orangeCircle, exitButton);
+        topMenu.getChildren().addAll(  blueCircle, redCircle, greenCircle, greyCircle, orangeCircle);
         HBox.setHgrow(blueCircle, Priority.ALWAYS);
         HBox.setHgrow(redCircle, Priority.ALWAYS);
         HBox.setHgrow(greenCircle, Priority.ALWAYS);
@@ -139,7 +137,7 @@ class Menu {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
                 textStyle.setSize(sizes[newValue.intValue()]);
-                textArea.setStyle( 0,textArea.getText().length(),textStyle.getSize());
+                textArea.setStyle( 0,textArea.getText().length(),textStyle.getTextStyle());
             }
         });
 

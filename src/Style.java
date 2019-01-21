@@ -6,15 +6,15 @@ public class Style {
     private String decoration = "-fx-underline: false;";
     private String size = "-fx-font-size: 24pt ;";
 
-    public void setSize(String size) {
+     void setSize(String size) {
         this.size = size;
     }
 
-    public void setWeight(String weight) {
+     void setWeight(String weight) {
         this.weight = weight;
     }
 
-    public void setStyle(String style) {
+     void setStyle(String style) {
         this.style = style;
     }
 
@@ -22,39 +22,39 @@ public class Style {
         this.fontType = fontType;
     }
 
-    public void setBackGround(String backGround) {
+     void setBackGround(String backGround) {
         this.backGround = backGround;
     }
 
-    public void setDecoration(String decoration) {
+     void setDecoration(String decoration) {
         this.decoration = decoration;
     }
 
-    public String getSize() {
+     String getSize() {
         return size;
     }
 
-    public String getWeight() {
+     String getWeight() {
         return weight;
     }
 
-    public String getStyle() {
+     String getStyle() {
         return style;
     }
 
-    public String getFontType() {
+     String getFontType() {
         return fontType;
     }
 
-    public String getBackGround() {
+     String getBackGround() {
         return backGround;
     }
 
-    public String getDecoration() {
+     String getDecoration() {
         return decoration;
     }
 
-    public String getTextStyle(){
+    String getTextStyle(){
         return getBackGround()+getFontType()+getWeight()+getDecoration()+getStyle()+getSize();
     }
 
